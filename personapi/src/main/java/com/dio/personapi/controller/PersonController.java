@@ -3,7 +3,7 @@ package com.dio.personapi.controller;
 
 import com.dio.personapi.dto.MessageResponseDTO;
 import com.dio.personapi.dto.request.PersonDTO;
-import com.dio.personapi.exception.PersonNotFountException;
+import com.dio.personapi.exception.PersonNotFoundException;
 import com.dio.personapi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,13 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonDTO findById(@PathVariable Long id) throws PersonNotFountException {
+    public PersonDTO findById(@PathVariable Long id) throws PersonNotFoundException {
         return personService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws PersonNotFoundException {
+        personService.delete(id);
     }
 }
